@@ -6,55 +6,16 @@
       <div class="wrpButtonStat">
         <button class="activeBtn" @click="fillData()">Случайные данные</button>
         <button class="noActiveBtn" @click="addData()">Добавить данные</button>
-        <button class="noActiveBtn" @click="addData()">Удалить данные</button>
-        <button class="noActiveBtn" @click="addData()">
+        <button class="noActiveBtn" @click="removeData()">
+          Удалить данные
+        </button>
+        <button class="noActiveBtn" @click="plusData()">
           Увеличить кол-во данных
         </button>
-        <button class="noActiveBtn" @click="addData()">
+        <button class="noActiveBtn" @click="menosData()">
           Уменьшить кол-во данных
         </button>
       </div>
-
-      <!-- <form @submit.prevent="addDateToChart()">
-      <div class="newData">
-        <label id="nameData" for="title">Имя</label>
-        <input v-model="name" type="text" id="title" />
-      </div>
-      <div class="profit">
-        <h5>Прибыль (рубли)</h5>
-        <div class="profitItems">
-          <div class="newData">
-            <label for="jan">Январь</label>
-            <input v-model="january" type="number" id="jan" />
-          </div>
-          <div class="newData">
-            <label for="fab">Февраль</label>
-            <input v-model="february" type="number" id="fab" />
-          </div>
-          <div class="newData">
-            <label for="mar">Март</label>
-            <input v-model="march" type="number" id="mar" />
-          </div>
-          <div class="newData">
-            <label for="apr">Апрель</label>
-            <input v-model="april" type="number" id="apr" />
-          </div>
-          <div class="newData">
-            <label for="may">Май</label>
-            <input v-model="may" type="number" id="may" />
-          </div>
-          <div class="newData">
-            <label for="jun">Июнь</label>
-            <input v-model="june" type="number" id="jun" />
-          </div>
-          <div class="newData">
-            <label for="jul">Июль</label>
-            <input v-model="july" type="number" id="jul" />
-          </div>
-          <button type="submit">Добавить</button>
-        </div>
-      </div>
-    </form> -->
     </div>
     <div class="wrpMobileStatistic">
       <p>К сожалению статистика не доступна с мобильного устройства</p>
@@ -79,6 +40,8 @@ export default {
       may: "",
       june: "",
       july: "",
+      date: "",
+      collection: "",
       allAddDate: {
         label: "",
         data: null,
@@ -87,14 +50,45 @@ export default {
         backgroundColor: "#2554FF",
         borderWidth: 1,
       },
-      datacollection: null,
+      months: [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь",
+      ],
+      datacollection: {
+        labels: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль"],
+        datasets: [
+          {
+            label: "Data",
+            backgroundColor: "#f87979",
+            data: [3, 7, 20, 50, 45, 10, 26],
+          },
+          {
+            label: "Data",
+            backgroundColor: "rgb(32, 210, 223)",
+            data: [45, 44, 10, 2, 34, 23, 30],
+          },
+          {
+            label: "Data",
+            backgroundColor: "rgb(108, 25, 119)",
+            data: [1, 22, 33, 44, 46, 32, 50],
+          },
+        ],
+      },
     };
-  },
-  mounted() {
-    this.fillData();
   },
   methods: {
     fillData() {
+      //обновить данные всех графиков
       this.datacollection = {
         labels: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль"],
         datasets: [
@@ -141,10 +135,13 @@ export default {
       };
     },
     addData() {
-      var datas = {
-        label: "Data",
-        backgroundColor: "#6666",
-        data: [
+      for (const element of this.datacollection.datasets) {
+        this.date = element;
+      }
+      console.log(this.date);
+      (this.date.label = "Data"),
+        (this.date.backgroundColor = "#6666"),
+        (this.date.data = [
           this.getRandomInt(),
           this.getRandomInt(),
           this.getRandomInt(),
@@ -152,19 +149,29 @@ export default {
           this.getRandomInt(),
           this.getRandomInt(),
           this.getRandomInt(),
-        ],
-      };
-      console.log(this.datacollection.datasets);
-
-      this.datacollection.datasets.push(datas);
+        ]);
+      this.collection = this.datacollection.datasets;
+      this.collection.push(this.date);
+      this.datacollection.datasets = this.collection;
+      console.log(this.datacollection.datasets); //добавить график
+    },
+    removeData() {
+      this.datacollection.datasets.pop();
+      console.log(this.datacollection.datasets); //удалить график
     },
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     },
-  },
-  watch: {
-    updateFunction: function () {
-      this.datacollection.update();
+    plusData() {
+      let numberOfMonths = this.datacollection.labels.length;
+      var currentMonth = this.months[numberOfMonths];
+      console.log(currentMonth);
+      this.datacollection.labels.push(currentMonth); //увеличить данные (увеличить ширину графиков по оси Х)
+    },
+    menosData() {
+      let numberOfMonths = this.datacollection.labels.length;
+      this.datacollection.labels.pop(); //уменьшить данные (уменьшить ширину графиков по оси Х
+      console.log(this.datacollection.labels);
     },
   },
 };
@@ -228,24 +235,22 @@ input {
   button {
     width: 154px;
     height: 32px;
-    outline: none;
-  }
-  .activeBtn {
-    border: 1px solid #bd0d22;
-    box-sizing: border-box;
-    color: #bd0d22;
-    font-weight: 600;
-    font-size: 11px;
-    background: inherit;
-    border-radius: 10px;
-  }
-  .noActiveBtn {
     border: 1px solid #cbcbcb;
     box-sizing: border-box;
     border-radius: 10px;
     color: #cbcbcb;
     font-size: 11px;
     background: inherit;
+    outline: none;
+    &:hover {
+      border: 1px solid #bd0d22;
+      box-sizing: border-box;
+      color: #bd0d22;
+      font-weight: 600;
+      font-size: 11px;
+      background: inherit;
+      border-radius: 10px;
+    }
   }
 }
 </style>

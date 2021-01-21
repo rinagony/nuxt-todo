@@ -39,6 +39,9 @@
           type="text"
           class="form-control-special"
         />
+        <small v-if="!isUserLogin" class="helper-text invalid"
+          >Неверный логин</small
+        >
       </div>
       <div class="form-group">
         <input
@@ -48,6 +51,9 @@
           type="password"
           class="form-control-special"
         />
+        <small v-if="!isUserPassword" class="helper-text invalid"
+          >Неверный пароль</small
+        >
       </div>
       <button class="btn login-button" type="submit">Войти</button>
     </form>
@@ -71,13 +77,24 @@ export default {
       login: "",
       password: "",
       registrate: false,
+      isUserLogin: true,
+      isUserPassword: true,
     };
+  },
+  beforeMount() {
+    this.isExistUser();
   },
   methods: {
     onSubmit() {
       let data = window.localStorage.getItem("user");
       let dataDiffer = JSON.parse(data);
       console.log(dataDiffer);
+      if (dataDiffer.login !== this.login) {
+        this.isUserLogin = false;
+      }
+      if (dataDiffer.password !== this.password) {
+        this.isUserPassword = false;
+      }
       if (
         dataDiffer.login == this.login &&
         dataDiffer.password == this.password
@@ -86,6 +103,11 @@ export default {
         this.$store.dispatch("login");
       } else {
         this.registrate = true;
+      }
+    },
+    isExistUser() {
+      if (localStorage.getItem("user") == null) {
+        this.$router.push("/registration");
       }
     },
   },
@@ -124,6 +146,11 @@ form {
   @include for-tablet-portrait-up {
     width: 358px;
   }
+}
+
+.helper-text {
+  color: #d6073d;
+  display: block;
 }
 
 .login-button {
