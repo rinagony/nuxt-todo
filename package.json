@@ -5,21 +5,23 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "start": "node server.js"
   },
   "dependencies": {
     "@nuxtjs/axios": "5.12.5",
     "axios": "0.21.1",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
-    "node-sass": "4.14.1",
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
+    "node-sass": "4.14.1",
     "nuxt": "^2.14.6",
+    "register-service-worker": "1.7.2",
+    "serve-static": "^1.14.1",
     "vue-chartjs": "^3.5.1",
     "vuelidate": "0.7.6",
-    "vuex": "3.5.1",
-    "register-service-worker": "1.7.2"
+    "vuex": "3.5.1"
   },
   "devDependencies": {
     "node-sass": "4.14.1",
