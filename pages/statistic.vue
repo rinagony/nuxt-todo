@@ -165,8 +165,8 @@ export default {
     plusData() {
       let numberOfMonths = this.datacollection.labels.length;
       var currentMonth = this.months[numberOfMonths];
-      console.log(currentMonth);
       this.datacollection.labels.push(currentMonth); //увеличить данные (увеличить ширину графиков по оси Х)
+      console.log(this.datacollection.labels)
     },
     menosData() {
       let numberOfMonths = this.datacollection.labels.length;
