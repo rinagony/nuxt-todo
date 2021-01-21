@@ -5,8 +5,14 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "generate": "nuxt generate",
-    "start": "node server.js"
+    "heroku-postbuild": "npm run build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+    
+  },
+  "engines": {
+    "node": "8.0.0",
+    "npm": "5.0.0"
   },
   "dependencies": {
     "@nuxtjs/axios": "5.12.5",
