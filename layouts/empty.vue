@@ -9,5 +9,6 @@
     display: flex;
     justify-content: center;
     padding-top: 6rem;
+    font-family: 'Montserrat', sans-serif;
 }
 </style>

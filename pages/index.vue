@@ -93,10 +93,6 @@ export default {
 
 <style scoped lang="scss">
 @import "./../assets/scss/style.scss";
-h2 {
-  margin-bottom: 2rem;
-  font-weight: 500;
-}
 .subtitle {
   font-weight: 300;
   font-size: 42px;

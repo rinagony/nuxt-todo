@@ -25,6 +25,8 @@ export default {
 h2 {
   margin-bottom: 2rem;
   font-weight: 500;
+  font-size: 30px;
+  line-height: 32px;
 }
 .container {
   @include for-medium-up {
@@ -38,5 +40,6 @@ h2 {
 
 #main {
   background: #eff1f9;
+  font-family: 'Montserrat', sans-serif;
 }
 </style>
